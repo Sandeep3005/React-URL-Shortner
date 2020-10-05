@@ -5,6 +5,7 @@ import CONSTANTS from "./../../constants";
 
 const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
   const { register, handleSubmit, errors } = useForm();
+
   const [fullUrlValue, setFullUrlValue] = useState("");
 
   const saveData = async (fullUrl) => {
@@ -18,6 +19,16 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
       setFullUrlValue("");
       setLoader(false);
     });
+  };
+
+  const isValidUrl = (url) => {
+    let valid = true;
+    try {
+      new URL(url);
+    } catch (_) {
+      valid = false;
+    }
+    return valid;
   };
 
   const onSubmit = (data) => {
@@ -39,7 +50,7 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
             name="urlToShrink"
             value={fullUrlValue}
             isInvalid={!!errors.urlToShrink}
-            ref={register({ required: true })}
+            ref={register({ required: true, validate: isValidUrl })}
             onChange={handleChange}
             placeholder="URL to shrink"
             aria-label="URL to shrink"
@@ -52,7 +63,12 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
         </InputGroup>
         <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
         <small className="text-danger">
-          {errors.urlToShrink && "Your input is required"}
+          {errors.urlToShrink &&
+            errors.urlToShrink.type === "required" &&
+            "Your input is required"}
+          {errors.urlToShrink &&
+            errors.urlToShrink.type === "validate" &&
+            "Invalid URL provided"}
         </small>
       </Form>
     </>

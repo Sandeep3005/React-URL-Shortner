@@ -5,7 +5,9 @@ const Header = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">Simple URL Shortner</Navbar.Brand>
+        <strong>
+          <Navbar.Brand href="/">Simple URL Shortner</Navbar.Brand>
+        </strong>
       </Navbar>
     </>
   );
