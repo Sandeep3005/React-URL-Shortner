@@ -41,6 +41,15 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
     setFullUrlValue(value);
   };
 
+  const getError = (errors) => {
+    if (!errors) return "";
+    const { urlToShrink } = errors;
+    if (urlToShrink && urlToShrink.type === "required")
+      return "Your input is required";
+    if (urlToShrink && urlToShrink.type === "validate")
+      return "Invalid URL provided";
+  };
+
   return (
     <>
       <Form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -57,19 +66,12 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
           />
           <InputGroup.Append>
             <Button type="submit" variant="outline-primary">
-              Shrink
+              Shrink Me
             </Button>
           </InputGroup.Append>
         </InputGroup>
         <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-        <small className="text-danger">
-          {errors.urlToShrink &&
-            errors.urlToShrink.type === "required" &&
-            "Your input is required"}
-          {errors.urlToShrink &&
-            errors.urlToShrink.type === "validate" &&
-            "Invalid URL provided"}
-        </small>
+        <small className="text-danger">{getError(errors)}</small>
       </Form>
     </>
   );
