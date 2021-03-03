@@ -57,7 +57,7 @@ const ShrinkUrlForm = ({ afterTableRefresh, setLoader }) => {
           />
           <InputGroup.Append>
             <Button type="submit" variant="outline-primary">
-              Shrink
+              Shrink Me
             </Button>
           </InputGroup.Append>
         </InputGroup>
